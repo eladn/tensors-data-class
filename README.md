@@ -13,6 +13,7 @@ pip install tensors-data-class
 ```python
 # TODO: simplify the below example. still use these:
 #   BatchFlattenedSeq, BatchFlattenedTensor,
+#   BatchedFlattenedIndicesTensor,
 #   BatchedFlattenedIndicesFlattenedTensor,
 #   BatchedFlattenedIndicesFlattenedSeq,
 #   BatchedFlattenedIndicesPseudoRandomPermutationBatchedFlattenedIndicesPseudoRandomPermutation,
@@ -85,6 +86,7 @@ print(batch)
 ## TensorsDataClass
 ## BatchFlattenedTensor
 ## BatchFlattenedSeq
+## BatchedFlattenedIndicesTensor
 ## BatchedFlattenedIndicesFlattenedTensor
 ## BatchedFlattenedIndicesFlattenedSeq
 ## BatchedFlattenedIndicesPseudoRandomPermutationBatchedFlattenedIndicesPseudoRandomPermutation
