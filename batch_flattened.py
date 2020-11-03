@@ -3,7 +3,7 @@ import dataclasses
 from typing import List, Union, Optional, Tuple, Dict, Set, Any, final
 
 from .misc import seq_lengths_to_mask, CollateData
-from .tensors_data_class import TensorsDataClass
+from .tensors_data_class_base import TensorsDataClass
 from .mixins import HasSelfIndexingGroupMixin, TensorDataClassWithSingleDataTensorMixin
 
 

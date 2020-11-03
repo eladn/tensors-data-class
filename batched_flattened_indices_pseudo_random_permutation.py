@@ -5,7 +5,7 @@ import numpy as np
 from typing import List, Union, Optional, Tuple, Dict, Set, Any, final
 
 from .misc import collate_tensors_with_variable_shapes, CollateData
-from .tensors_data_class import TensorsDataClass
+from .tensors_data_class_base import TensorsDataClass
 from .mixins import HasTargetIndexingGroupMixin
 
 

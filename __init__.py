@@ -1,18 +1,26 @@
-from .batch_flattened import BatchFlattenedTensor, BatchFlattenedTensorsDataClassMixin, BatchFlattenedTensorsDataClass
-from .batch_flattened_pseudo_random_sampler_from_range import BatchFlattenedPseudoRandomSamplerFromRange
-from .batch_flattened_seq import BatchFlattenedSeq, BatchFlattenedSequencesDataClassMixin, \
+from tensors_data_class.batch_flattened import \
+    BatchFlattenedTensor,\
+    BatchFlattenedTensorsDataClassMixin,\
+    BatchFlattenedTensorsDataClass
+from tensors_data_class.batch_flattened_pseudo_random_sampler_from_range import \
+    BatchFlattenedPseudoRandomSamplerFromRange
+from tensors_data_class.batch_flattened_seq import \
+    BatchFlattenedSeq, \
+    BatchFlattenedSequencesDataClassMixin, \
     BatchFlattenedSequencesDataClass
-from .batched_flattened_indices import BatchedFlattenedIndicesTensor
-from .batched_flattened_indices_flattened import BatchedFlattenedIndicesFlattenedTensorsDataClassMixin, \
+from tensors_data_class.batched_flattened_indices import BatchedFlattenedIndicesTensor
+from tensors_data_class.batched_flattened_indices_flattened import \
+    BatchedFlattenedIndicesFlattenedTensorsDataClassMixin, \
     BatchedFlattenedIndicesFlattenedTensorsDataClass, \
     BatchedFlattenedIndicesFlattenedTensor, \
     BatchedFlattenedIndicesFlattenedSequencesDataClassMixin, \
     BatchedFlattenedIndicesFlattenedSequencesDataClass, \
     BatchedFlattenedIndicesFlattenedSeq
-from .batched_flattened_indices_pseudo_random_permutation import BatchedFlattenedIndicesPseudoRandomPermutation
-from .misc import CollateData
-from .tensor_with_collate_mask import TensorWithCollateMask
-from .tensors_data_class import TensorsDataClass
+from tensors_data_class.batched_flattened_indices_pseudo_random_permutation import \
+    BatchedFlattenedIndicesPseudoRandomPermutation
+from tensors_data_class.misc import CollateData
+from tensors_data_class.tensor_with_collate_mask import TensorWithCollateMask
+from tensors_data_class.tensors_data_class_base import TensorsDataClass
 
 
 __all__ = [

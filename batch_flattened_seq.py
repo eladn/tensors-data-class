@@ -5,7 +5,7 @@ from typing import List, Union, Optional, Tuple, Dict, Set, Any, final
 from .misc import seq_lengths_to_mask, collate_tensors_with_variable_shapes, CollateData
 from .mixins import TensorDataClassWithSequencesMixin, TensorDataClassWithSingleSequenceFieldMixin
 from .batch_flattened import BatchFlattenedTensorsDataClassMixin
-from .tensors_data_class import TensorsDataClass
+from .tensors_data_class_base import TensorsDataClass
 
 
 __all__ = ['BatchFlattenedSequencesDataClassMixin', 'BatchFlattenedSequencesDataClass', 'BatchFlattenedSeq']

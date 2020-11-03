@@ -3,7 +3,7 @@ import dataclasses
 from typing import List, final
 
 from .misc import CollateData, collate_tensors_with_variable_shapes
-from .tensors_data_class import TensorsDataClass
+from .tensors_data_class_base import TensorsDataClass
 from .mixins import TensorDataClassWithSingleDataTensorMixin
 
 
