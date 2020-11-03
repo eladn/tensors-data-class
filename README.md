@@ -1,8 +1,8 @@
 # TensorsDataClass
-PyTorch Extension Library for packing tensors in a form of structured classes tree with built-in support for collating into batches, indices fixing and more.
+PyTorch Extension Library for organizing tensors in a form of a structured tree of dataclasses, with built-in support for advanced collating mechanisms. The batch creation process seamlessly solves issues like: sequences padding, un/flattening variable #objects per example into a single batch dimension, fixing within-example indices to be batch-based indices, auto-creation of sequences & collate masks, and more.
 
 # What pains TensorsDataClass aims to solve
-...
+... variable number of sequences per example where the sequence lengths may also be variable; lots of inputs usually gets messy - hard to handle, to name, to move to GPU, to abstract in a (X,Y) fashion ...
 
 # Installation
 ```bash
@@ -78,6 +78,7 @@ example1 = MethodCodeInputTensors(...)  # TODO: fill example data
 example2 = MethodCodeInputTensors(...)  # TODO: fill example data
 batch = MethodCodeInputTensors.collate([example1, example2])
 print(batch)
+# TODO: add example for creating a padded-sequence (after applying embedding on the input), unflattening. 
 ```
 
 # Different types for different use-cases
