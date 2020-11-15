@@ -99,8 +99,8 @@ class BatchFlattenedSeqShuffler(TensorDataClassWithSequencesMixin, TensorsDataCl
         return shuffled_seqs
 
     def unshuffle(self, shuffled_sequence_input: torch.Tensor) -> torch.Tensor:
-        assert shuffled_sequence_input.shape[:-1] == self.permutations.shape
-        extended_perm = self.permutations.unsqueeze(-1).expand(shuffled_sequence_input.shape)
+        assert shuffled_sequence_input.shape[:-1] == self.inverse_permutations.shape
+        extended_perm = self.inverse_permutations.unsqueeze(-1).expand(shuffled_sequence_input.shape)
         unshuffled_seqs = torch.gather(input=shuffled_sequence_input, dim=1, index=extended_perm)
         unshuffled_seqs = unshuffled_seqs.masked_fill(
             ~self.sequences_mask.unsqueeze(-1), 0)
