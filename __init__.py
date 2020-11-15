@@ -18,6 +18,7 @@ from tensors_data_class.batched_flattened_indices_flattened import \
     BatchedFlattenedIndicesFlattenedSeq
 from tensors_data_class.batched_flattened_indices_pseudo_random_permutation import \
     BatchedFlattenedIndicesPseudoRandomPermutation
+from tensors_data_class.batch_flattened_seq_shuffler import BatchFlattenedSeqShuffler
 from tensors_data_class.misc import CollateData
 from tensors_data_class.tensor_with_collate_mask import TensorWithCollateMask
 from tensors_data_class.tensors_data_class_base import TensorsDataClass
@@ -31,7 +32,7 @@ __all__ = [
     'BatchedFlattenedIndicesFlattenedTensorsDataClassMixin', 'BatchedFlattenedIndicesFlattenedTensorsDataClass',
     'BatchedFlattenedIndicesFlattenedTensor', 'BatchedFlattenedIndicesFlattenedSequencesDataClassMixin',
     'BatchedFlattenedIndicesFlattenedSequencesDataClass', 'BatchedFlattenedIndicesFlattenedSeq',
-    'BatchedFlattenedIndicesPseudoRandomPermutation',
+    'BatchedFlattenedIndicesPseudoRandomPermutation', 'BatchFlattenedSeqShuffler',
     'CollateData',
     'TensorWithCollateMask',
     'TensorsDataClass'
