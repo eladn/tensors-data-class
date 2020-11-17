@@ -74,6 +74,7 @@ class TensorsDataClass:
         return self.cpu().deep_map(
             map_fn=lambda field_val: field_val.tolist() if hasattr(field_val, 'tolist') else field_val)
 
+    # TODO: generalize to support `TensorDataDict`!
     def deep_map(
             self,
             map_fn: MapFn,
@@ -108,6 +109,7 @@ class TensorsDataClass:
                 setattr(new_obj, field.name, mapped_field_values[field.name])
         return new_obj
 
+    # TODO: generalize to support `TensorDataDict`!
     def deep_lazy_map(
             self,
             map_fn: MapFn,
@@ -172,6 +174,12 @@ class TensorsDataClass:
             self._lazy_map_usage_history.add(field_name)
         return object.__getattribute__(self, field_name)
 
+    def access_field(self, name: str):
+        return getattr(self, name)
+
+    def get_all_traversable_data_field_names(self) -> Tuple[str, ...]:
+        return tuple(field.name for field in dataclasses.fields(self))
+
     @classmethod
     def collate_values(cls, values_as_tuple: CollatableValuesTuple, collate_data: CollateData):
         assert all(type(value) == type(values_as_tuple[0]) for value in values_as_tuple)
@@ -190,6 +198,7 @@ class TensorsDataClass:
                     any(len(elem) > 0 and isinstance(elem[0], TorchGeometricData) for elem in values_as_tuple):
                 flattened = tuple(values_as_tuple for elem in values_as_tuple for datum in elem)
                 return TorchGeometricBatch.from_data_list(flattened, [])
+        # TODO: consider canceling native dict handling! (raise ValueError to use `TensorDataDict` instead)
         if isinstance(values_as_tuple[0], dict):
             all_keys = {key for dct in values_as_tuple for key in dct.keys()}
             return {key: cls.collate_values(tuple(dct[key] for dct in values_as_tuple if key in dct),
@@ -216,7 +225,7 @@ class TensorsDataClass:
     @classmethod
     def collate(cls, inputs: List['TensorsDataClass'],
                 collate_data: Optional[CollateData] = None,
-                is_most_outer_call: bool = True):
+                is_most_outer_call: bool = True) -> 'TensorsDataClass':
         assert all(isinstance(inp, cls) for inp in inputs)
         assert all(not inp.is_batched for inp in inputs)
         assert len(inputs) > 0
@@ -232,7 +241,7 @@ class TensorsDataClass:
         return batched_obj
 
     @classmethod
-    def _collate_first_pass(cls, inputs: List['TensorsDataClass'], collate_data: CollateData):
+    def _collate_first_pass(cls, inputs: List['TensorsDataClass'], collate_data: CollateData) -> 'TensorsDataClass':
         batched_obj = cls(
             **{field.name: cls.collate_values(
                     tuple(getattr(inp, field.name) for inp in inputs),
@@ -241,8 +250,9 @@ class TensorsDataClass:
         batched_obj._batch_size = len(inputs)
         return batched_obj
 
-    def post_collate_indices_fix(self, parents: Tuple['TensorsDataClass', ...], fields_path: Tuple[str, ...],
-                                 collate_data: CollateData):
+    def post_collate_indices_fix(
+            self, parents: Tuple['TensorsDataClass', ...],
+            fields_path: Tuple[str, ...], collate_data: CollateData):
         for field in dataclasses.fields(self):
             field_value = getattr(self, field.name)
             if isinstance(field_value, TensorsDataClass):
@@ -264,16 +274,14 @@ class TensorsDataClass:
         assert not ((parents_path is None) ^ (fields_path is None))
         if traversal_order == 'previsit':
             yield self if parents_path is None else (self, parents_path, fields_path)
-        for field in self.get_data_fields():
-            field_value = getattr(self, field.name)
+        for field_name in self.get_all_traversable_data_field_names():
+            field_value = self.access_field(field_name)
             if not isinstance(field_value, TensorsDataClass):
                 continue
             new_parents_path = None if parents_path is None else parents_path + (self,)
-            new_fields_path = None if fields_path is None else fields_path + (field.name,)
+            new_fields_path = None if fields_path is None else fields_path + (field_name,)
             for child in field_value.traverse(
                     parents_path=new_parents_path, fields_path=new_fields_path, traversal_order=traversal_order):
                 yield child
         if traversal_order == 'postvisit':
             yield self if parents_path is None else (self, parents_path, fields_path)
-
-

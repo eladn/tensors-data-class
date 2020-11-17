@@ -22,6 +22,7 @@ from tensors_data_class.batch_flattened_seq_shuffler import BatchFlattenedSeqShu
 from tensors_data_class.misc import CollateData
 from tensors_data_class.tensor_with_collate_mask import TensorWithCollateMask
 from tensors_data_class.tensors_data_class_base import TensorsDataClass
+from tensors_data_class.tensors_data_dict import TensorsDataDict
 
 
 __all__ = [
@@ -35,5 +36,5 @@ __all__ = [
     'BatchedFlattenedIndicesPseudoRandomPermutation', 'BatchFlattenedSeqShuffler',
     'CollateData',
     'TensorWithCollateMask',
-    'TensorsDataClass'
+    'TensorsDataDict', 'TensorsDataClass'
 ]
