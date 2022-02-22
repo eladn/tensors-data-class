@@ -2,6 +2,12 @@
 PyTorch Extension Library for organizing tensors in a form of a structured tree of dataclasses, with built-in support for advanced collating mechanisms. The batch creation process seamlessly solves issues like: sequences padding, un/flattening variable #objects per example into a single batch dimension, fixing within-example indices to be batch-based indices, auto-creation of sequences & collate masks, and more.
 
 # What pains TensorsDataClass aims to solve
+Sometimes the input data to the model is formed of several types of elements; that is, each pre-processed example contains multiple kinds of entities. For example, a model for programming-related tasks that uses the code's underlying structure to represent the input code-snippet might have the following elements: CFG nodes, AST nodes, tokens, symbols, identifiers, and paths. Some of the model's calculations sometimes involves elements of multiple kinds, and an element can participate in multiple calculations. Typically, the index of an element can be used to address it in the computation. For example, one could use `all_identifiers_encodings[identifier_indices_occur_in_code_statement]` to get the encodings of certain identifiers. Another example is sequences of elements, that can be given as sequences of indices `sequence_indices`. After encoding the elements `all_elements_encodings`, the concrete seqeunce of encoded elements can be addressed by `all_elements_encodings[sequence_indices]`.
+
+Usually, training and evaluating neural networks is performed over batches of examples, following the SIMD (single instruction multiple data) computational scheme to maximize the utility of the accelerated processing units and make the training feasible under the available resources. However, the preprocessed example is stored on its own, while it should reoccur in various batches during training. Therefore, the batching takes place during data loading.
+
+Whenever a collection of examples are being collated into a batch, continuous tensors are being created containing all the elements in the batch. As a result, the indices of these elements are updated. Thus, the references to them have to be fixed accordingly to retain the indexing consistency.
+
 ... variable number of sequences per example where the sequence lengths may also be variable; lots of inputs usually gets messy - hard to handle, to name, to move to GPU, to abstract in a (X,Y) fashion ...
 
 # Installation
